@@ -29,18 +29,20 @@ C_sym_cl = jacobian(y, x);
 D_sym_cl = jacobian(y, u);
 
 %% 2. NUMERIC PARAMETERS (Table I)
-L1v = 0.8e-3;  R1v = 50e-3;
-L2v = 0.4e-3;  R2v = 50e-3;
-Cv  = 30e-6;
+L1v = 111e-6;  R1v = 0.11e-3;
+L2v = 11e-6;  R2v = 0.11e-3;
+Cv  = 480e-6;
 wv  = 2*pi*50;
 
 % Numeric base controller gains
-kP_val  = 0.12;
-kI_val  = 20.0;
-k_i_val = 50.00;
-k_v_val = 5.0;
-k_ig_val = 10.0;   
-fprintf('Controller gains: kP=%.3f, kI=%.1f, k_i=%.2f, k_v=%.2f, k_ig=%.2f\n', kP_val, kI_val, k_i_val, k_v_val, k_ig_val);
+kP_val  = 1.0;
+kI_val  = 150.0;
+k_i_val = 2.0;
+k_v_val = 10.0;
+k_ig_val = 0.1;   
+fprintf('LCL filter: L1=%.4f mH, L2=%.4f mH, C=%.2f µF, R1=%.4f Ω, R2=%.4f Ω, f=%.1f Hz\n', ...
+    L1v*1e3, L2v*1e3, Cv*1e6, R1v, R2v, wv/(2*pi));
+fprintf('\nController gains: kP=%.3f, kI=%.1f, k_i=%.2f, k_v=%.2f, k_ig=%.2f\n', kP_val, kI_val, k_i_val, k_v_val, k_ig_val);
 
 
 A_num = double(subs(A_sym_cl, [L1,R1,L2,R2,C,omega], [L1v,R1v,L2v,R2v,Cv,wv]));
